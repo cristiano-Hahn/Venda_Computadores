@@ -35,18 +35,6 @@ public class Pedido implements Serializable{
             foreignKey = @ForeignKey(name = "fk_produto_pessoa"))
     private Pessoa pessoa;
     
-    
-    @ManyToOne
-    @JoinColumn(name = "idproduto", referencedColumnName = "id", 
-            foreignKey = @ForeignKey(name = "fk_produto_estado"))
-    private Produto produto;
-    
-    @Column
-    private Integer quantidade;
-    
-    @Column
-    private Double valorUnitario;
-    
     @Column
     private Date dataPedido;
     
@@ -59,18 +47,6 @@ public class Pedido implements Serializable{
 
     public Pessoa getPessoa() {
         return pessoa;
-    }
-
-    public Produto getProduto() {
-        return produto;
-    }
-
-    public Integer getQuantidade() {
-        return quantidade;
-    }
-
-    public Double getValorUnitario() {
-        return valorUnitario;
     }
 
     public Date getDataPedido() {
@@ -87,18 +63,6 @@ public class Pedido implements Serializable{
 
     public void setPessoa(Pessoa pessoa) {
         this.pessoa = pessoa;
-    }
-
-    public void setProduto(Produto produto) {
-        this.produto = produto;
-    }
-
-    public void setQuantidade(Integer quantidade) {
-        this.quantidade = quantidade;
-    }
-
-    public void setValorUnitario(Double valorUnitario) {
-        this.valorUnitario = valorUnitario;
     }
 
     public void setDataPedido(Date dataPedido) {
