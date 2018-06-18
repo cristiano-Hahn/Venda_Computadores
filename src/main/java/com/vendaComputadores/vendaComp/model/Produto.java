@@ -33,5 +33,39 @@ public class Produto implements Serializable {
     
     @Column
     private Integer quantidadeDisponivel;
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public Double getValorUnitario() {
+        return valorUnitario;
+    }
+
+    public Integer getQuantidadeDisponivel() {
+        return quantidadeDisponivel;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setValorUnitario(Double valorUnitario) {
+        this.valorUnitario = valorUnitario;
+    }
+
+    public void setQuantidadeDisponivel(Integer quantidadeDisponivel) {
+        this.quantidadeDisponivel = quantidadeDisponivel;
+    }
+    
+    
     
 }
