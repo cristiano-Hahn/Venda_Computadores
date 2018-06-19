@@ -29,6 +29,7 @@ public class ProdutoController {
     
     
     public ModelAndView findAll(){
+        //O método vai exibir a página produto.html
         ModelAndView mv = new ModelAndView("/produto");
         
         mv.addObject("produtos", service.findAll());
