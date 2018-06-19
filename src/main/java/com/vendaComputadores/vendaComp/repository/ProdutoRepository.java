@@ -5,7 +5,7 @@
  */
 package com.vendaComputadores.vendaComp.repository;
 
-import com.vendaComputadores.vendaComp.model.Pedido;
+import com.vendaComputadores.vendaComp.model.Produto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +14,6 @@ import org.springframework.stereotype.Repository;
  * @author crist
  */
 @Repository
-public interface PedidoRepository extends JpaRepository<Pedido, Long>{
+public interface ProdutoRepository extends JpaRepository<Produto, Long>{
     
 }

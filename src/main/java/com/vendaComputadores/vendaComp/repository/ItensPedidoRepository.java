@@ -5,15 +5,13 @@
  */
 package com.vendaComputadores.vendaComp.repository;
 
-import com.vendaComputadores.vendaComp.model.Pedido;
+import com.vendaComputadores.vendaComp.model.ItensPedido;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author crist
  */
-@Repository
-public interface PedidoRepository extends JpaRepository<Pedido, Long>{
+public interface ItensPedidoRepository extends JpaRepository<ItensPedido, Long>{
     
 }
