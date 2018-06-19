@@ -35,10 +35,5 @@ public class ProdutoService {
 	
     public void delete(Long id) {
 	repository.deleteById(id);
-    }
-    
-    
-    
-    
-    
+    }    
 }
