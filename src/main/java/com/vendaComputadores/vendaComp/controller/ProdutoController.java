@@ -21,13 +21,13 @@ import static sun.misc.ClassFileTransformer.add;
  *
  * @author crist
  */
-@Controller("/produto")
+@Controller()
 public class ProdutoController {
     
     @Autowired
     private ProdutoService service;
     
-    
+    @GetMapping("/produto")
     public ModelAndView findAll(){
         //O método vai exibir a página produto.html
         ModelAndView mv = new ModelAndView("/produto");
@@ -37,7 +37,7 @@ public class ProdutoController {
         return mv;
     }
     
-    @PostMapping("/save")
+    @PostMapping("produto/save")
     public ModelAndView save(@Valid Produto produto, BindingResult result){
         if (result.hasErrors()){
             return add(produto);
@@ -48,19 +48,19 @@ public class ProdutoController {
         return findAll();
     }
     
-    @GetMapping("/add")
+    @GetMapping("produto/add")
     private ModelAndView add(Produto produto) {
         ModelAndView mv = new ModelAndView("/produtoAdd");
 	mv.addObject("produto", produto);
 	return mv;
     }
     
-    @GetMapping("/edit/{id}")
+    @GetMapping("produto/edit/{id}")
     public ModelAndView edit(@PathVariable("id") Long id){
         return add(service.findOne(id));
     }
     
-    @GetMapping("/delete/{id}")
+    @GetMapping("produto/delete/{id}")
     public ModelAndView delete(@PathVariable("id") Long id) {	
         service.delete(id);	
 	return findAll();

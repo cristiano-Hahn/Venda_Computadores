@@ -21,12 +21,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-@Controller("/usuario")
+//@Controller("/usuario")
 public class UsuarioController {
 
     @Autowired
     private UsuarioService service;
 
+    @GetMapping("/usuario")
     public ModelAndView findAll() {
         ModelAndView mv = new ModelAndView("/usuario");
 
