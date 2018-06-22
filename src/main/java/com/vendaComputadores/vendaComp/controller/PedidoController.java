@@ -7,6 +7,7 @@ package com.vendaComputadores.vendaComp.controller;
 
 import com.vendaComputadores.vendaComp.model.Pedido;
 import com.vendaComputadores.vendaComp.service.PedidoService;
+import com.vendaComputadores.vendaComp.service.PessoaService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,9 @@ public class PedidoController {
     @Autowired
     private PedidoService service;
     
+    @Autowired
+    private PessoaService pessoaService;
+    
     @GetMapping("/pedido")
     public ModelAndView findAll(){
         ModelAndView mv = new ModelAndView("/pedido");
@@ -38,6 +42,7 @@ public class PedidoController {
     public ModelAndView add(Pedido pedido){
         ModelAndView mv = new ModelAndView("/pedidoAdd");
         mv.addObject("pedido", pedido);
+        mv.addObject("pessoas", pessoaService.findAll());
         return mv;
     }
     
