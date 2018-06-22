@@ -37,7 +37,6 @@ and open the template in the editor.
                                                         <td th:text="${#dates.format(pedido.dataPedido, 'dd/MM/yyyy')}"></td>
 							<td th:text="${pedido.pessoa.id + ' - ' + pedido.pessoa.nome } "></td>
 							<td th:text="${pedido.total}"></td>
-						        <!--<td th:text="${#dates.format(post.data, 'dd/MM/yyyy')}"></td>-->
 							<td>
 								<div class="btn-group pull-right">
 							   		<a class="btn btn-sm btn-primary" th:href="@{/pedido/edit/{id}(id=${pedido.id})}" >Editar</a>
