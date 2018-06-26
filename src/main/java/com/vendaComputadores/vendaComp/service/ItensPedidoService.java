@@ -6,33 +6,29 @@
 package com.vendaComputadores.vendaComp.service;
 
 import com.vendaComputadores.vendaComp.model.ItensPedido;
-import com.vendaComputadores.vendaComp.model.Pedido;
-import com.vendaComputadores.vendaComp.repository.PedidoRepository;
+import com.vendaComputadores.vendaComp.repository.ItensPedidoRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
  *
- * @author CristianoH
+ * @author crist
  */
 @Service
-public class PedidoService {
+public class ItensPedidoService {
     @Autowired
-    private PedidoRepository repository;
+    private ItensPedidoRepository repository;
     
-    
-    public List<Pedido> findAll(){
+     public List<ItensPedido> findAll(){
         return repository.findAll();
     }
     
-    public Pedido getOne(Long id){
+    public ItensPedido getOne(Long id){
         return repository.getOne(id);
     }
     
-    public Pedido save(Pedido pedido){
-        return repository.saveAndFlush(pedido);
+    public ItensPedido save(ItensPedido item){
+        return repository.saveAndFlush(item);
     }
-    
-    
 }

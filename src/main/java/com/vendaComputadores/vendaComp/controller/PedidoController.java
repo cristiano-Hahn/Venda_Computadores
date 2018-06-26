@@ -5,14 +5,19 @@
  */
 package com.vendaComputadores.vendaComp.controller;
 
+import com.vendaComputadores.vendaComp.model.ItensPedido;
 import com.vendaComputadores.vendaComp.model.Pedido;
+import com.vendaComputadores.vendaComp.service.ItensPedidoService;
 import com.vendaComputadores.vendaComp.service.PedidoService;
 import com.vendaComputadores.vendaComp.service.PessoaService;
+import com.vendaComputadores.vendaComp.service.ProdutoService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -27,7 +32,13 @@ public class PedidoController {
     private PedidoService service;
     
     @Autowired
+    private ItensPedidoService itensPedidoService;
+    
+    @Autowired
     private PessoaService pessoaService;
+    
+    @Autowired
+    private ProdutoService produtoService;
     
     @GetMapping("/pedido")
     public ModelAndView findAll(){
@@ -57,7 +68,31 @@ public class PedidoController {
         return findAll();
     }
     
+    @GetMapping("pedido/edit/{id}")
+    public ModelAndView edit(@PathVariable("id") Long id){
+        Pedido pedido;
+        
+        pedido = service.getOne(id);
+        
+        ModelAndView mv = new ModelAndView("/pedidoAdd");
+        mv.addObject("pedido", pedido);
+        mv.addObject("item", new ItensPedido());
+        mv.addObject("produtos", produtoService.findAll());
+        
+        
+        return mv;
+        //return add(service.getOne(id));
+    }
     
-    
-    
+    @PostMapping("pedido/{id}/itens/add")
+    public String saveItens(@PathVariable("id") Long id, @Valid  ItensPedido itens){
+        
+        Pedido pedido = service.getOne(id);
+        
+        pedido.getItensPedido().add(itens);
+        
+        service.save(pedido);
+        
+        return "redirect:/pedido/edit/" + id.toString() + "#detalhe";
+    }
 }

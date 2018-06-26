@@ -7,14 +7,18 @@ package com.vendaComputadores.vendaComp.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 /**
@@ -35,8 +39,13 @@ public class Pedido implements Serializable{
             foreignKey = @ForeignKey(name = "fk_produto_pessoa"))
     private Pessoa pessoa;
     
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "idpedido", referencedColumnName = "id", 
+            foreignKey = @ForeignKey(name = "fk_produto_pessoa"))
+    private List<ItensPedido> itensPedido; 
+    
     @Column
-    private Date dataPedido;
+    private Date dataPedido; 
     
     @Column
     private Double total;
@@ -47,6 +56,14 @@ public class Pedido implements Serializable{
 
     public Pessoa getPessoa() {
         return pessoa;
+    }
+
+    public List<ItensPedido> getItensPedido() {
+        return itensPedido;
+    }
+
+    public void setItensPedido(List<ItensPedido> itensPedido) {
+        this.itensPedido = itensPedido;
     }
 
     public Date getDataPedido() {
