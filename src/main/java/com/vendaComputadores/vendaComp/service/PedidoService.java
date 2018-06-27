@@ -34,5 +34,9 @@ public class PedidoService {
         return repository.saveAndFlush(pedido);
     }
     
+    public void delete(Pedido pedido){
+        repository.delete(pedido);
+    }
+    
     
 }

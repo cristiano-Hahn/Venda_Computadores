@@ -84,6 +84,13 @@ public class PedidoController {
         //return add(service.getOne(id));
     }
     
+    @GetMapping("pedido/delete/{id}")
+    public ModelAndView delete(@PathVariable("id") Long id){
+        
+        service.delete(service.getOne(id));
+        return findAll();
+    }
+    
     @PostMapping("pedido/{id}/itens/add")
     public String saveItens(@PathVariable("id") Long id, @Valid  ItensPedido itens){
         
@@ -95,4 +102,16 @@ public class PedidoController {
         
         return "redirect:/pedido/edit/" + id.toString() + "#detalhe";
     }
+    
+    @GetMapping("pedido/{idpedido}/itens/delete/{iditem}") 
+    public String deleteItem(@PathVariable("idpedido") Long idPedido, @PathVariable("iditem") Long idItem){
+        
+        Pedido pedido =  service.getOne(idPedido);
+               
+        pedido.getItensPedido().remove(idItem);
+        
+        return "redirect:/pedido/edit/" + idPedido.toString() + "#detalhe";
+    }
+    
+    
 }
