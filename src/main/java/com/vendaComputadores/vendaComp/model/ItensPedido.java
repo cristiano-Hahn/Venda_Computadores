@@ -34,9 +34,6 @@ public class ItensPedido implements Serializable{
     private Produto produto;
     
     @Column
-    private Double valorUnitario;
-    
-    @Column
     private Integer quantidade;
     
     @Column
@@ -56,14 +53,6 @@ public class ItensPedido implements Serializable{
 
     public void setProduto(Produto produto) {
         this.produto = produto;
-    }
-
-    public Double getValorUnitario() {
-        return valorUnitario;
-    }
-
-    public void setValorUnitario(Double valorUnitario) {
-        this.valorUnitario = valorUnitario;
     }
 
     public Integer getQuantidade() {

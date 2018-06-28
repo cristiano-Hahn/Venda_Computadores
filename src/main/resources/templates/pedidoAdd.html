@@ -25,8 +25,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
         <script src='http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/js/bootstrap-datepicker.min.js'></script>
         <script type="text/javascript">
-            $(function () {
-                $('#datetimepicker1').datetimepicker();
+            $(document).ready(function(){
+            $('#data').mask('00/00/0000');
             });
         </script>
     </head>
@@ -54,22 +54,25 @@
                             <div class="form-group row">
                                 <div class="col-md-2" th:classappend="${#fields.hasErrors('dataPedido')}? 'has-error'">
                                     <label>Data do pedido</label>
-                                    <div class="input-group date" id='datetimepicker1'>
-                                        <input type="text" id="dataPedido" name="dataPedido"
+                                    
+                                        <input type="text" id="data" name="dataPedido" 
                                             class="form-control"
                                             th:field="*{dataPedido}"
                                             autofocus="autofocus" 
                                             placeholder="Informe a data do pedido" maxlength="50" required="true"/>
-                                        <div class="input-group-addon" >
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </div>
-                                    </div>
+                                   
+                                  
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-3">
                                     <label>Cliente</label> 
-                                    <select class="form-control" th:field="*{pessoa}" id="pessoa" required="true">
+                                    <select id="produto" class="selectOneMenu form-control input-sm" data-live-search="true"
+                                            th:field="*{pessoa}">
+                                        <option th:each="i : ${pessoas}"
+                                                th:value="${i.id}"
+                                                th:text="${i.nome}">
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -113,18 +116,8 @@
                                             <input type="text" class="form-control input-sm" th:field="*{quantidade}" autofocus="autofocus" placeholder="Informe a quantidade" maxlength="50" required="true"/>
                                         </div>
                                     </div>
-                                    
-                                    
-                                    
                                     <div class="form-group row">
-                                        <div class="col-md-4">
-                                            <label>Valor unitário</label>
-                                            <input type="text" class="form-control input-sm" th:field="*{valorUnitario}" autofocus="autofocus" placeholder="Informe a quantidade" maxlength="50" required="true"/>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-group row">
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
                                             <button style="width:100%" type="submit" class="btn btn-success btn-md">
                                                 <i class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></i>
                                                 Adicionar Item
@@ -141,7 +134,7 @@
                                 <tr>
                                     <th>Produto</th>
                                     <th>Quantidade</th>
-                                    <th>Valor</th>
+                                    <th>Valor unitário</th>
                                     <th>Total</th>
                                     <th align="center" style="width: 45px; min-width: 45px">Ações</th>
                                 </tr>
@@ -150,12 +143,12 @@
                                 <tr th:each="item : ${pedido.ItensPedido}">
                                     <td th:text="${item.produto.id + ' - ' + item.produto.nome}"></td>
                                     <td th:text="${item.quantidade}"></td>
-                                    <td th:text="${item.valorUnitario}"></td>
+                                    <td th:text="${item.produto.valorUnitario}"></td>
                                     <td th:text="${item.total}"></td>
                                     <td align="center">
                                         <div class="btn-group">
                                             <a class="btn btn-danger btn-xs"
-                                               th:href="@{pedido/{idpedido}/itens/delete/{iditem} (idpedido=${pedido.id}, iditem=${item.id})}">
+                                               th:href="@{../{idpedido}/itens/delete/{iditem} (idpedido=${pedido.id}, iditem=${item.id})}">
                                                 <i class="glyphicon glyphicon-trash" aria-hidden="true"></i>
                                             </a>
                                         </div>

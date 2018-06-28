@@ -53,7 +53,9 @@ public class PedidoController {
     public ModelAndView add(Pedido pedido){
         ModelAndView mv = new ModelAndView("/pedidoAdd");
         mv.addObject("pedido", pedido);
+        System.out.println(pessoaService.findAll().size()); 
         mv.addObject("pessoas", pessoaService.findAll());
+         System.out.println(pessoaService.findAll().size()); 
         return mv;
     }
     
@@ -78,6 +80,7 @@ public class PedidoController {
         mv.addObject("pedido", pedido);
         mv.addObject("item", new ItensPedido());
         mv.addObject("produtos", produtoService.findAll());
+        mv.addObject("pessoas", pessoaService.findAll());
         
         
         return mv;
@@ -96,21 +99,28 @@ public class PedidoController {
         
         Pedido pedido = service.getOne(id);
         
+        
         pedido.getItensPedido().add(itens);
+        
+        pedido = service.calcTotalPedido(pedido);
         
         service.save(pedido);
         
-        return "redirect:/pedido/edit/" + id.toString() + "#detalhe";
+        return "redirect:/pedido/edit/" + id.toString();
     }
     
     @GetMapping("pedido/{idpedido}/itens/delete/{iditem}") 
-    public String deleteItem(@PathVariable("idpedido") Long idPedido, @PathVariable("iditem") Long idItem){
+    public String deleteItem(@PathVariable("idpedido") Long idPedido, @PathVariable("iditem") Long idItem){   
+        Pedido pedido = service.getOne(idPedido);
+        ItensPedido item =  service.getItem(idItem); 
         
-        Pedido pedido =  service.getOne(idPedido);
-               
-        pedido.getItensPedido().remove(idItem);
+        pedido.getItensPedido().remove(item);
         
-        return "redirect:/pedido/edit/" + idPedido.toString() + "#detalhe";
+        pedido = service.calcTotalPedido(pedido);
+        
+        service.save(pedido);
+        
+        return "redirect:/pedido/edit/" + idPedido.toString();
     }
     
     

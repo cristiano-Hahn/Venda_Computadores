@@ -36,4 +36,13 @@ public class ProdutoService {
     public void delete(Long id) {
 	repository.deleteById(id);
     }    
+   
+    public void diminuirEstoque(Produto produto, Integer quantidade){
+        if (produto.getQuantidadeDisponivel() < quantidade){
+            //Realizar aqui uma validação
+        }
+        produto.setQuantidadeDisponivel(produto.getQuantidadeDisponivel() - quantidade);
+        
+      //  save(produto);
+    }
 }
