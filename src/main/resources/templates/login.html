@@ -28,7 +28,7 @@
                     <h3 class="panel-title">Credenciais de Acesso</h3>
                 </div>
                 <div class="panel-body">
-                    <form th:action="@{/login}" method="POST">
+                    <form th:action="@{/login}" th:object="${UsuarioDto}" method="POST">
                         <fieldset>
                             <div th:if="${param.error}">
                                 <div class="alert alert-danger">
@@ -48,7 +48,9 @@
                                            name="username"
                                            class="form-control"
                                            autofocus="autofocus"
-                                           placeholder="Usuário">
+                                           placeholder="Usuário"
+                                           th:field="*{usuario}"
+                                           th>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -58,6 +60,7 @@
                                            id="password"
                                            name="password"
                                            class="form-control"
+                                           th:field="*{senha}"
                                            placeholder="Senha">
                                 </div>
                             </div>
