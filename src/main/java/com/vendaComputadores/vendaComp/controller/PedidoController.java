@@ -5,14 +5,19 @@
  */
 package com.vendaComputadores.vendaComp.controller;
 
+import com.vendaComputadores.vendaComp.model.ItensPedido;
 import com.vendaComputadores.vendaComp.model.Pedido;
+import com.vendaComputadores.vendaComp.service.ItensPedidoService;
 import com.vendaComputadores.vendaComp.service.PedidoService;
 import com.vendaComputadores.vendaComp.service.PessoaService;
+import com.vendaComputadores.vendaComp.service.ProdutoService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -27,7 +32,13 @@ public class PedidoController {
     private PedidoService service;
     
     @Autowired
+    private ItensPedidoService itensPedidoService;
+    
+    @Autowired
     private PessoaService pessoaService;
+    
+    @Autowired
+    private ProdutoService produtoService;
     
     @GetMapping("/pedido")
     public ModelAndView findAll(){
@@ -42,7 +53,9 @@ public class PedidoController {
     public ModelAndView add(Pedido pedido){
         ModelAndView mv = new ModelAndView("/pedidoAdd");
         mv.addObject("pedido", pedido);
+        System.out.println(pessoaService.findAll().size()); 
         mv.addObject("pessoas", pessoaService.findAll());
+         System.out.println(pessoaService.findAll().size()); 
         return mv;
     }
     
@@ -57,7 +70,58 @@ public class PedidoController {
         return findAll();
     }
     
+    @GetMapping("pedido/edit/{id}")
+    public ModelAndView edit(@PathVariable("id") Long id){
+        Pedido pedido;
+        
+        pedido = service.getOne(id);
+        
+        ModelAndView mv = new ModelAndView("/pedidoAdd");
+        mv.addObject("pedido", pedido);
+        mv.addObject("item", new ItensPedido());
+        mv.addObject("produtos", produtoService.findAll());
+        mv.addObject("pessoas", pessoaService.findAll());
+        
+        
+        return mv;
+        //return add(service.getOne(id));
+    }
     
+    @GetMapping("pedido/delete/{id}")
+    public ModelAndView delete(@PathVariable("id") Long id){
+        
+        service.delete(service.getOne(id));
+        return findAll();
+    }
+    
+    @PostMapping("pedido/{id}/itens/add")
+    public String saveItens(@PathVariable("id") Long id, @Valid  ItensPedido itens){
+        
+        Pedido pedido = service.getOne(id);
+        
+        
+        pedido.getItensPedido().add(itens);
+        
+        pedido = service.calcTotalPedido(pedido);
+        
+        service.save(pedido);
+        
+        return "redirect:/pedido/edit/" + id.toString();
+    }
+    
+    @GetMapping("pedido/{idpedido}/itens/delete/{iditem}") 
+    public String deleteItem(@PathVariable("idpedido") Long idPedido, @PathVariable("iditem") Long idItem){   
+        Pedido pedido = service.getOne(idPedido);
+        ItensPedido item =  service.getItem(idItem); 
+        
+        pedido.getItensPedido().remove(item);
+        
+        pedido = service.calcTotalPedido(pedido);
+        
+        service.save(pedido);
+        
+        return "redirect:/pedido/edit/" + idPedido.toString();
+    }
     
     
 }
