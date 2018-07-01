@@ -9,7 +9,7 @@ package com.vendaComputadores.vendaComp.controller;
  *
  * @author mauricio
  */
-import com.vendaComputadores.vendaComp.model.Produto;
+import com.vendaComputadores.vendaComp.model.Usuario;
 import com.vendaComputadores.vendaComp.model.Usuario;
 import com.vendaComputadores.vendaComp.service.UsuarioService;
 import javax.validation.Valid;
@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 //@Controller("/usuario")
+@Controller()
 public class UsuarioController {
 
     @Autowired
@@ -36,7 +37,7 @@ public class UsuarioController {
         return mv;
     }
 
-    @PostMapping("/save")
+    @PostMapping("usuario/save")
     public ModelAndView save(@Valid Usuario usuario, BindingResult result) {
         if (result.hasErrors()) {
             return add(usuario);
@@ -47,19 +48,19 @@ public class UsuarioController {
         return findAll();
     }
 
-    @GetMapping("/add")
+    @GetMapping("usuario/add")
     private ModelAndView add(Usuario usuario) {
         ModelAndView mv = new ModelAndView("/usuarioAdd");
         mv.addObject("usuario", usuario);
         return mv;
     }
 
-    @GetMapping("/edit/{id}")
+    @GetMapping("usuario/edit/{id}")
     public ModelAndView edit(@PathVariable("id") Long id) {
         return add(service.findOne(id));
     }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("usuario/delete/{id}")
     public ModelAndView delete(@PathVariable("id") Long id) {
         service.delete(id);
         return findAll();
