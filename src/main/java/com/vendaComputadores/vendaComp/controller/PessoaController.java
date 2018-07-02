@@ -26,7 +26,7 @@ public class PessoaController {
     @Autowired
     private PessoaService service;
 
-    @GetMapping("/pessoa")
+    @GetMapping("/cliente")
     public ModelAndView findAll() {
         //O método vai exibir a página produto.html
         ModelAndView mv = new ModelAndView("/pessoa");
@@ -36,7 +36,7 @@ public class PessoaController {
         return mv;
     }
 
-    @PostMapping("pessoa/save")
+    @PostMapping("cliente/save")
     public ModelAndView save(@Valid Pessoa pessoa, BindingResult result) {
         if (result.hasErrors()) {
             return add(pessoa);
@@ -47,19 +47,19 @@ public class PessoaController {
         return findAll();
     }
 
-    @GetMapping("pessoa/add")
+    @GetMapping("cliente/add")
     private ModelAndView add(Pessoa pessoa) {
         ModelAndView mv = new ModelAndView("/pessoaAdd");
         mv.addObject("pessoa", pessoa);
         return mv;
     }
 
-    @GetMapping("pessoa/edit/{id}")
+    @GetMapping("cliente/edit/{id}")
     public ModelAndView edit(@PathVariable("id") Long id) {
         return add(service.findOne(id));
     }
 
-    @GetMapping("pessoa/delete/{id}")
+    @GetMapping("cliente/delete/{id}")
     public ModelAndView delete(@PathVariable("id") Long id) {
         service.delete(id);
         return findAll();
