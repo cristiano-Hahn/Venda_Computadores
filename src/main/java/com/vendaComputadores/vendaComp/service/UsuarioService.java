@@ -5,7 +5,7 @@
  */
 package com.vendaComputadores.vendaComp.service;
 
-import com.vendaComputadores.vendaComp.model.Produto;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.vendaComputadores.vendaComp.model.Usuario;
 import com.vendaComputadores.vendaComp.repository.UsuarioRepository;
 import java.util.List;
@@ -36,6 +36,10 @@ public class UsuarioService {
 
     public void delete(Long id) {
         repository.deleteById(id);
+    }
+    
+    public Boolean validouUsuario(String login, String senha){
+        return repository.buscarUsuario(login, senha).size() > 0;
     }
 
 }

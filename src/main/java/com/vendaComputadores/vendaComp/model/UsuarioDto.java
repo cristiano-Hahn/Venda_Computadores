@@ -18,6 +18,16 @@ public class UsuarioDto implements Serializable {
     private String login;
     
     private String senha;
+    
+    private Boolean Valido;
+
+    public Boolean getValido() {
+        return Valido;
+    }
+
+    public void setValido(Boolean Valido) {
+        this.Valido = Valido;
+    }
 
     public String getLogin() {
         return login;

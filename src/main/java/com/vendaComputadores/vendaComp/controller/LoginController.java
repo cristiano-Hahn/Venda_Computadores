@@ -6,7 +6,8 @@
 package com.vendaComputadores.vendaComp.controller;
 
 import com.vendaComputadores.vendaComp.model.UsuarioDto;
-import javax.validation.Valid;
+import com.vendaComputadores.vendaComp.service.UsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,11 +20,28 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class LoginController {
     
+    @Autowired
+    UsuarioService service;
     
     @PostMapping("/login")
     public ModelAndView login(@ModelAttribute UsuarioDto user){
-    user.getLogin();
-    ModelAndView mv = new ModelAndView("/produto");
+        ModelAndView mv; 
+        if(service.validouUsuario(user.getLogin(), user.getSenha())){
+            mv = new ModelAndView("/produto");        
+        } else {
+            mv = new ModelAndView("/login");        
+            user.setValido(Boolean.FALSE);
+            mv.addObject("dto", user);
+        }
+    
+
+    
+    
+    
+    
+    
+    
+    
     return mv;    
     } 
 }

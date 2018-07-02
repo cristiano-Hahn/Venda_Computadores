@@ -28,18 +28,14 @@
                     <h3 class="panel-title">Credenciais de Acesso</h3>
                 </div>
                 <div class="panel-body">
-                    <form th:action="@{/login}" th:object="${UsuarioDto}" method="POST">
+                    <form th:action="@{/login}" th:object="${dto}" method="POST">
                         <fieldset>
-                            <div th:if="${param.error}">
+                            <div th:if="${dto.valido} == false">
                                 <div class="alert alert-danger">
-                                    Suas credenciais de acesso são inválidas.
+                                    Login ou senha incorretos!
                                 </div>
                             </div>
-                            <div th:if="${param.logout}">
-                                <div class="alert alert-info">
-                                    Você foi desconectado.
-                                </div>
-                            </div>
+                            
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -49,7 +45,7 @@
                                            class="form-control"
                                            autofocus="autofocus"
                                            placeholder="Usuário"
-                                           th:field="*{usuario}"
+                                           th:field="*{login}"
                                            th>
                                 </div>
                             </div>
